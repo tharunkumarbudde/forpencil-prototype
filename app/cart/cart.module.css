@@ -1,0 +1,219 @@
+/* Cart Page Styles */
+
+.cartPage {
+  padding: var(--space-10) 0 var(--space-16);
+  min-height: 60vh;
+}
+
+.pageTitle {
+  font-family: var(--font-display);
+  font-size: clamp(var(--text-3xl), 4vw, var(--text-4xl));
+  margin-bottom: var(--space-8);
+  text-align: center;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+}
+
+@media (min-width: 1024px) {
+  .layout {
+    grid-template-columns: 1fr 380px;
+    gap: var(--space-12);
+  }
+}
+
+/* Items */
+.itemsHeader {
+  display: none;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: var(--space-4);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--border-muted);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  color: var(--fg-muted);
+  font-weight: var(--weight-medium);
+}
+
+@media (min-width: 768px) {
+  .itemsHeader { display: grid; }
+}
+
+.cartItem {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  padding: var(--space-5) 0;
+  border-bottom: 1px solid var(--border-muted);
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .cartItem {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    flex-wrap: nowrap;
+  }
+}
+
+.itemLeft {
+  display: flex;
+  gap: var(--space-4);
+  flex: 1;
+  min-width: 0;
+}
+
+.itemImage {
+  width: 80px;
+  height: 80px;
+  background: var(--bg-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--border-secondary);
+}
+
+.itemDetails {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.itemBrand {
+  font-size: var(--text-2xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  color: var(--fg-muted);
+}
+
+.itemName {
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.itemPrice {
+  font-size: var(--text-sm);
+  color: var(--fg-secondary);
+}
+
+.qtySelector {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border-primary);
+  width: fit-content;
+}
+
+.qtySelector button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  color: var(--fg-secondary);
+  transition: background var(--duration-fast);
+}
+
+.qtySelector button:hover { background: var(--bg-hover); }
+
+.qtySelector span {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  min-width: 36px;
+  text-align: center;
+}
+
+.itemTotal {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  font-weight: var(--weight-semibold);
+}
+
+.removeBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: var(--fg-subtle);
+  transition: color var(--duration-fast);
+}
+
+.removeBtn:hover { color: var(--error); }
+
+/* Summary */
+.summary {
+  background: var(--bg-secondary);
+  padding: var(--space-6);
+  height: fit-content;
+  position: sticky;
+  top: calc(var(--header-height) + var(--space-6));
+}
+
+.summaryTitle {
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  margin-bottom: var(--space-5);
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-2) 0;
+  font-size: var(--text-sm);
+  color: var(--fg-secondary);
+}
+
+.summaryTotal {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--fg-primary);
+  padding: var(--space-4) 0;
+}
+
+.continueShopping {
+  display: block;
+  text-align: center;
+  margin-top: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--fg-secondary);
+  text-decoration: underline;
+}
+
+/* Empty Cart */
+.emptyCart {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+}
+
+.emptyContent {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.emptyIcon { color: var(--border-secondary); }
+
+.emptyTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+}
+
+.emptyText {
+  color: var(--fg-muted);
+  margin: 0;
+}

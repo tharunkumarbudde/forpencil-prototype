@@ -1,0 +1,201 @@
+/* ProductCard Styles — Premium Art Supply Card */
+
+.card {
+  position: relative;
+  animation: fadeInUp var(--duration-slow) var(--ease-out) var(--animation-delay, 0ms) both;
+}
+
+/* ── IMAGE AREA ── */
+.imageWrap {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--bg-secondary);
+  margin-bottom: var(--space-4);
+}
+
+.imagePlaceholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+
+.imageIcon {
+  color: var(--border-secondary);
+}
+
+.imageWrap:hover .imagePlaceholder {
+  transform: scale(1.03);
+}
+
+/* Badges */
+.badges {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  z-index: 2;
+}
+
+/* Wishlist */
+.wishlistBtn {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-card);
+  border: 1px solid var(--border-muted);
+  color: var(--fg-muted);
+  z-index: 2;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: all var(--duration-normal) var(--ease-out);
+  border-radius: var(--radius-full);
+}
+
+.card:hover .wishlistBtn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.wishlistBtn:hover {
+  color: var(--error);
+  border-color: var(--error);
+}
+
+.wishlisted {
+  opacity: 1;
+  transform: translateY(0);
+  color: var(--error);
+  border-color: var(--error);
+}
+
+/* Quick Actions */
+.quickActions {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--space-3);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all var(--duration-normal) var(--ease-out);
+  z-index: 2;
+}
+
+.card:hover .quickActions {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.quickBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-3);
+  background: var(--fg-primary);
+  color: var(--fg-inverse);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-medium);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  transition: background var(--duration-fast);
+}
+
+.quickBtn:hover {
+  background: var(--cta-primary-hover);
+}
+
+/* ── PRODUCT INFO ── */
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.brand {
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-medium);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  color: var(--fg-muted);
+}
+
+.name {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-regular);
+  color: var(--fg-primary);
+  line-height: var(--leading-snug);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color var(--duration-fast);
+}
+
+.name:hover {
+  color: var(--fg-secondary);
+}
+
+/* Rating */
+.rating {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+}
+
+.stars {
+  display: flex;
+  gap: 1px;
+}
+
+.ratingText {
+  font-size: var(--text-2xs);
+  color: var(--fg-muted);
+}
+
+/* Price */
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+}
+
+.price {
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  color: var(--fg-primary);
+}
+
+.originalPrice {
+  font-size: var(--text-sm);
+  color: var(--fg-muted);
+  text-decoration: line-through;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 767px) {
+  .wishlistBtn {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .quickActions {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

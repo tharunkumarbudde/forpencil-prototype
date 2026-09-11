@@ -1,0 +1,93 @@
+/* Wishlist Styles */
+
+.wishlistPage {
+  padding: var(--space-10) 0 var(--space-16);
+  min-height: 60vh;
+}
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: var(--space-8);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--border-muted);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(var(--text-3xl), 4vw, var(--text-4xl));
+  margin-bottom: var(--space-1);
+}
+
+.count {
+  font-size: var(--text-sm);
+  color: var(--fg-secondary);
+  margin: 0;
+}
+
+.clearBtn {
+  font-size: var(--text-xs);
+  color: var(--fg-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  text-decoration: underline;
+  transition: color var(--duration-fast);
+}
+
+.clearBtn:hover {
+  color: var(--fg-primary);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+}
+
+@media (min-width: 640px) {
+  .grid {
+    gap: var(--space-6) var(--space-5);
+  }
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Empty State */
+.emptyState {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+}
+
+.emptyContent {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.emptyIcon {
+  color: var(--border-secondary);
+}
+
+.emptyTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+}
+
+.emptyText {
+  color: var(--fg-muted);
+  margin: 0;
+}

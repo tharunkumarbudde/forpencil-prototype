@@ -1,0 +1,172 @@
+/* ================================================================
+   FORPENCIL — DESIGN TOKENS
+   Premium Art Supply Ecommerce Design System
+   ================================================================ */
+
+:root {
+  /* ── COLOR SYSTEM ── */
+  
+  /* Backgrounds */
+  --bg-primary: #FAF8F5;
+  --bg-secondary: #F2EFEA;
+  --bg-tertiary: #EBE7E0;
+  --bg-inverse: #1A1A1A;
+  --bg-card: #FFFFFF;
+  --bg-overlay: rgba(26, 26, 26, 0.6);
+  --bg-hover: rgba(26, 26, 26, 0.03);
+  
+  /* Foreground / Text */
+  --fg-primary: #1A1A1A;
+  --fg-secondary: #4A4A4A;
+  --fg-muted: #7A7A7A;
+  --fg-subtle: #A0A0A0;
+  --fg-inverse: #FAF8F5;
+  --fg-link: #1A1A1A;
+  --fg-link-hover: #4A4A4A;
+  
+  /* Borders */
+  --border-primary: #E5E0DA;
+  --border-secondary: #D5CFC7;
+  --border-muted: #EDEBE8;
+  --border-focus: #1A1A1A;
+  
+  /* Accent & CTA */
+  --accent: #2D2926;
+  --cta-primary: #1A1A1A;
+  --cta-primary-hover: #333333;
+  --cta-primary-text: #FFFFFF;
+  --cta-secondary: transparent;
+  --cta-secondary-hover: #1A1A1A;
+  --cta-secondary-text: #1A1A1A;
+  --cta-secondary-text-hover: #FFFFFF;
+  
+  /* Status */
+  --success: #2D7F46;
+  --success-bg: #EDF7EF;
+  --warning: #D4860B;
+  --warning-bg: #FFF8EB;
+  --error: #C43131;
+  --error-bg: #FEF2F2;
+  --on-sale: #C43131;
+  --on-sale-bg: #FEF2F2;
+  
+  /* Rating */
+  --star-filled: #1A1A1A;
+  --star-empty: #D5CFC7;
+  
+  /* ── TYPOGRAPHY ── */
+  
+  /* Font Families */
+  --font-display: 'DM Serif Display', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  
+  /* Font Sizes */
+  --text-2xs: 0.6875rem;    /* 11px */
+  --text-xs: 0.75rem;       /* 12px */
+  --text-sm: 0.8125rem;     /* 13px */
+  --text-base: 0.9375rem;   /* 15px */
+  --text-md: 1rem;          /* 16px */
+  --text-lg: 1.125rem;      /* 18px */
+  --text-xl: 1.25rem;       /* 20px */
+  --text-2xl: 1.5rem;       /* 24px */
+  --text-3xl: 1.875rem;     /* 30px */
+  --text-4xl: 2.25rem;      /* 36px */
+  --text-5xl: 3rem;         /* 48px */
+  --text-6xl: 3.75rem;      /* 60px */
+  --text-7xl: 4.5rem;       /* 72px */
+  
+  /* Font Weights */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  
+  /* Line Heights */
+  --leading-none: 1;
+  --leading-tight: 1.15;
+  --leading-snug: 1.3;
+  --leading-normal: 1.6;
+  --leading-relaxed: 1.75;
+  
+  /* Letter Spacing */
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.04em;
+  --tracking-wider: 0.08em;
+  --tracking-widest: 0.14em;
+  
+  /* ── SPACING ── */
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+  --space-20: 5rem;     /* 80px */
+  --space-24: 6rem;     /* 96px */
+  --space-32: 8rem;     /* 128px */
+  
+  /* ── LAYOUT ── */
+  --container-max: 1400px;
+  --container-narrow: 960px;
+  --container-wide: 1600px;
+  --container-gutter: 1.25rem;
+  --section-gap: var(--space-20);
+  --header-height: 64px;
+  --topbar-height: 36px;
+  
+  /* ── BORDERS & RADIUS ── */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-full: 9999px;
+  
+  /* ── SHADOWS ── */
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.10);
+  --shadow-xl: 0 16px 48px rgba(0,0,0,0.12);
+  
+  /* ── TRANSITIONS ── */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+  --duration-slower: 600ms;
+  
+  /* ── Z-INDEX ── */
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+}
+
+/* Responsive token overrides */
+@media (min-width: 768px) {
+  :root {
+    --container-gutter: 2rem;
+    --header-height: 72px;
+    --section-gap: var(--space-24);
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --container-gutter: 2.5rem;
+    --section-gap: var(--space-32);
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --container-gutter: 3rem;
+  }
+}
