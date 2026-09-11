@@ -41,25 +41,13 @@ const processProducts = async () => {
     // Process images
     const localImages = [];
     
-    // Instead of using the blocked CDN images, use beautifully generated placeholders 
-    // with the product name so the demo looks clean and professional.
-    const shortName = p.name.split(' ').slice(0, 4).join(' ');
-    const placeholderUrl = `https://placehold.co/800x800/1a1a1a/ffffff/png?text=${encodeURIComponent(shortName)}`;
-    
     for (let i = 0; i < p.images.length; i++) {
       const img = p.images[i];
-      // Create a unique placeholder for each image index
-      const indexedPlaceholder = `https://placehold.co/800x800/1a1a1a/ffffff/png?text=${encodeURIComponent(shortName + '\\nImage ' + (i+1))}`;
-      
-      localImages.push({ 
-        id: img.id || i + 1, 
-        src: i === 0 ? placeholderUrl : indexedPlaceholder, 
-        alt: img.alt || p.name 
-      });
+      localImages.push({ id: img.id || i + 1, src: img.src, alt: img.alt || p.name });
     }
     
     if (localImages.length === 0) {
-       localImages.push({ id: 1, src: placeholderUrl, alt: p.name });
+       localImages.push({ id: 1, src: '/images/products/placeholder-1.jpg', alt: p.name });
     }
 
     const priceDivider = Math.pow(10, p.prices.currency_minor_unit || 2);

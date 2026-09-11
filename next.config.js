@@ -1,9 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
-  basePath: '/forpencil-prototype',
   images: {
-    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -17,10 +14,6 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'i0.wp.com',
       },
-      {
-        protocol: 'https',
-        hostname: 'placehold.co',
-      }
     ],
     formats: ['image/avif', 'image/webp'],
   },

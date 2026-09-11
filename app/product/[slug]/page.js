@@ -10,12 +10,6 @@ import { products, formatPrice, getDiscountPercentage } from '@/data/products';
 import ProductCard from '@/components/product/ProductCard/ProductCard';
 import styles from './product.module.css';
 
-export function generateStaticParams() {
-  return products.map((p) => ({
-    slug: p.slug,
-  }));
-}
-
 export default function ProductPage({ params }) {
   const unwrappedParams = use(params);
   const { slug } = unwrappedParams;

@@ -158,7 +158,7 @@ export default function ShopPage() {
               <h4 className={styles.filterGroupTitle}>Brands</h4>
               <ul className={styles.filterList}>
                 {brands.slice(0, 10).map((brand) => (
-                  <li key={brand.name}>
+                  <li key={brand.id}>
                     <label className={styles.filterCheckbox}>
                       <input
                         type="checkbox"
@@ -166,8 +166,7 @@ export default function ShopPage() {
                         onChange={() => toggleBrand(brand.name)}
                       />
                       <span className={styles.checkmark} />
-                      <span className={styles.filterName}>{brand.name}</span>
-                      <span className={styles.filterCount}>({brand.count})</span>
+                      <span>{brand.name}</span>
                     </label>
                   </li>
                 ))}

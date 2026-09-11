@@ -2,18 +2,11 @@
 
 import { useState, useMemo, use } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { SlidersHorizontal, X } from 'lucide-react';
 import ProductCard from '@/components/product/ProductCard/ProductCard';
 import { products } from '@/data/products';
 import { categories, brands, getCategoryBySlug } from '@/data/categories';
-import styles from '../shop.module.css';
-
-export function generateStaticParams() {
-  return categories.map((c) => ({
-    category: c.slug,
-  }));
-}
+import styles from '../shop.module.css'; // Reuse shop styles
 
 export default function CategoryPage({ params }) {
   const unwrappedParams = use(params);
@@ -195,7 +188,7 @@ export default function CategoryPage({ params }) {
               <h4 className={styles.filterGroupTitle}>Brands</h4>
               <ul className={styles.filterList}>
                 {brands.slice(0, 10).map((brand) => (
-                  <li key={brand.name}>
+                  <li key={brand.id}>
                     <label className={styles.filterCheckbox}>
                       <input
                         type="checkbox"

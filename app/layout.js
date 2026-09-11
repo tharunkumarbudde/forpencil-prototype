@@ -42,7 +42,6 @@ export const metadata = {
     index: true,
     follow: true,
   },
-  referrer: 'no-referrer',
 };
 
 export default function RootLayout({ children }) {
