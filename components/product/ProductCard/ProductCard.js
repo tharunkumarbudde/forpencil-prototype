@@ -1,8 +1,8 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
-import { Heart, ShoppingBag, Star, Eye } from 'lucide-react';
+import { Heart, ShoppingBag, Star, Check } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useWishlist } from '@/context/WishlistContext';
 import { formatPrice, getDiscountPercentage } from '@/data/products';
@@ -11,6 +11,7 @@ import styles from './ProductCard.module.css';
 export default function ProductCard({ product, index = 0 }) {
   const { addItem } = useCart();
   const { toggleItem, isInWishlist } = useWishlist();
+  const [added, setAdded] = useState(false);
 
   const discount = getDiscountPercentage(
     Number(product.regular_price),
@@ -19,6 +20,9 @@ export default function ProductCard({ product, index = 0 }) {
 
   const wishlisted = isInWishlist(product.id);
 
+  const primaryImage = product.images?.[0]?.src;
+  const secondaryImage = product.images?.[1]?.src || primaryImage;
+
   const handleAddToCart = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -26,9 +30,11 @@ export default function ProductCard({ product, index = 0 }) {
       id: product.id,
       name: product.name,
       price: product.price,
-      image: product.images?.[0]?.src,
+      image: primaryImage,
       brand: product.brand,
     });
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1800);
   };
 
   const handleWishlist = (e) => {
@@ -40,7 +46,7 @@ export default function ProductCard({ product, index = 0 }) {
       price: product.price,
       regular_price: product.regular_price,
       sale_price: product.sale_price,
-      image: product.images?.[0]?.src,
+      image: primaryImage,
       brand: product.brand,
       slug: product.slug,
     });
@@ -49,18 +55,20 @@ export default function ProductCard({ product, index = 0 }) {
   return (
     <article
       className={styles.card}
-      style={{ '--animation-delay': `${index * 60}ms` }}
+      style={{ '--animation-delay': `${(index % 8) * 50}ms` }}
     >
       <Link href={`/product/${product.slug}`} className={styles.imageWrap}>
         {/* Badges */}
         <div className={styles.badges}>
           {product.badge && (
-            <span className={`badge ${product.badge === 'Bestseller' || product.badge === 'Trending' ? 'badge--new' : 'badge--new'}`}>
+            <span className={`${styles.badge} ${styles.badgeNew}`}>
               {product.badge}
             </span>
           )}
           {discount > 0 && (
-            <span className="badge badge--sale">{discount}% OFF</span>
+            <span className={`${styles.badge} ${styles.badgeSale}`}>
+              -{discount}%
+            </span>
           )}
         </div>
 
@@ -69,34 +77,52 @@ export default function ProductCard({ product, index = 0 }) {
           className={`${styles.wishlistBtn} ${wishlisted ? styles.wishlisted : ''}`}
           onClick={handleWishlist}
           aria-label={wishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+          title={wishlisted ? 'Remove from wishlist' : 'Save to wishlist'}
         >
-          <Heart size={16} fill={wishlisted ? 'currentColor' : 'none'} />
+          <Heart size={15} fill={wishlisted ? 'currentColor' : 'none'} />
         </button>
 
-        {/* Product Image */}
-        {product.images?.[0]?.src ? (
-          <Image
-            src={product.images[0].src}
-            alt={product.images[0].alt || product.name}
-            fill
-            unoptimized
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className={styles.image}
-            style={{ objectFit: 'cover' }}
-          />
-        ) : (
-          <div className={styles.imagePlaceholder}>
-            <div className={styles.imageIcon}>
-              <ShoppingBag size={32} strokeWidth={1} />
+        {/* Product Dual Image Reveal */}
+        <div className={styles.imageStack}>
+          {primaryImage ? (
+            <>
+              <img
+                src={primaryImage}
+                alt={product.name}
+                className={styles.primaryImg}
+                loading="lazy"
+              />
+              {secondaryImage && secondaryImage !== primaryImage && (
+                <img
+                  src={secondaryImage}
+                  alt={`${product.name} alternate view`}
+                  className={styles.secondaryImg}
+                  loading="lazy"
+                />
+              )}
+            </>
+          ) : (
+            <div className={styles.imagePlaceholder}>
+              <ShoppingBag size={28} strokeWidth={1.2} />
             </div>
-          </div>
-        )}
+          )}
+        </div>
 
-        {/* Quick Actions (hover) */}
+        {/* Quick Add Overlay Button */}
         <div className={styles.quickActions}>
-          <button className={styles.quickBtn} onClick={handleAddToCart}>
-            <ShoppingBag size={14} />
-            <span>Add to Cart</span>
+          <button 
+            className={`${styles.quickBtn} ${added ? styles.quickBtnAdded : ''}`}
+            onClick={handleAddToCart}
+          >
+            {added ? (
+              <>
+                <Check size={14} /> <span>Added to Bag</span>
+              </>
+            ) : (
+              <>
+                <ShoppingBag size={14} /> <span>Quick Add</span>
+              </>
+            )}
           </button>
         </div>
       </Link>
@@ -109,28 +135,30 @@ export default function ProductCard({ product, index = 0 }) {
         </Link>
 
         {/* Rating */}
-        {Number(product.rating_count) > 0 && (
+        {Number(product.rating_count) > 0 ? (
           <div className={styles.rating}>
             <div className={styles.stars}>
               {[1, 2, 3, 4, 5].map((star) => (
                 <Star
                   key={star}
-                  size={12}
+                  size={11}
                   fill={star <= Math.round(Number(product.average_rating)) ? 'var(--star-filled)' : 'none'}
                   stroke={star <= Math.round(Number(product.average_rating)) ? 'var(--star-filled)' : 'var(--star-empty)'}
                 />
               ))}
             </div>
             <span className={styles.ratingText}>
-              {product.average_rating} ({product.rating_count})
+              ({product.rating_count})
             </span>
           </div>
+        ) : (
+          <span className={styles.editorialTag}>Architectural Grade</span>
         )}
 
-        {/* Price */}
+        {/* Price Row */}
         <div className={styles.priceRow}>
           <span className={styles.price}>₹{formatPrice(product.price)}</span>
-          {product.on_sale && product.regular_price !== product.sale_price && (
+          {product.on_sale && product.regular_price && product.regular_price !== product.sale_price && (
             <span className={styles.originalPrice}>₹{formatPrice(product.regular_price)}</span>
           )}
         </div>

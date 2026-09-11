@@ -2,11 +2,11 @@
 
 import { useState, useMemo, use } from 'react';
 import Link from 'next/link';
-import { SlidersHorizontal, X } from 'lucide-react';
+import { SlidersHorizontal, X, ArrowRight } from 'lucide-react';
 import ProductCard from '@/components/product/ProductCard/ProductCard';
 import { products } from '@/data/products';
 import { categories, brands, getCategoryBySlug } from '@/data/categories';
-import styles from '../shop.module.css'; // Reuse shop styles
+import styles from '../shop.module.css';
 
 export default function CategoryPage({ params }) {
   const unwrappedParams = use(params);
@@ -70,8 +70,8 @@ export default function CategoryPage({ params }) {
       <div className={styles.shopPage}>
         <div className="container" style={{ textAlign: 'center', padding: 'var(--space-16) 0' }}>
           <h1 style={{ fontFamily: 'var(--font-display)', marginBottom: 'var(--space-4)' }}>Category Not Found</h1>
-          <p style={{ marginBottom: 'var(--space-6)' }}>The category &quot;{categorySlug}&quot; does not exist.</p>
-          <Link href="/shop" className="btn btn--primary">Back to Shop</Link>
+          <p style={{ marginBottom: 'var(--space-6)' }}>The requested collection &quot;{categorySlug}&quot; is unavailable.</p>
+          <Link href="/shop" className="btn btn--primary">Return to Catalog</Link>
         </div>
       </div>
     );
@@ -92,17 +92,29 @@ export default function CategoryPage({ params }) {
         </div>
       </div>
 
-      {/* Category Header */}
+      {/* Category Editorial Header */}
       <div className={styles.categoryHeader}>
         <div className="container">
+          <span className="eyebrow eyebrow--accent">COLLECTION</span>
           <h1 className={styles.categoryTitle}>{currentCategory.name}</h1>
           {currentCategory.description && (
             <p className={styles.categoryDesc}>{currentCategory.description}</p>
           )}
+
+          {/* Subcategory Pills */}
+          {currentCategory.children && currentCategory.children.length > 0 && (
+            <div className={styles.subCatChips}>
+              {currentCategory.children.map((sub) => (
+                <Link key={sub.id} href={`/shop/${sub.slug}`} className={styles.subCatChip}>
+                  {sub.name} <span className={styles.subCatChipCount}>({sub.count})</span>
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Toolbar */}
+      {/* Sticky Filter Toolbar */}
       <div className={styles.toolbar}>
         <div className="container">
           <div className={styles.toolbarInner}>
@@ -110,33 +122,56 @@ export default function CategoryPage({ params }) {
               className={styles.filterToggle}
               onClick={() => setShowFilters(!showFilters)}
             >
-              <SlidersHorizontal size={16} />
+              <SlidersHorizontal size={15} />
               <span>Filters</span>
               {activeFilterCount > 0 && (
                 <span className={styles.filterCount}>{activeFilterCount}</span>
               )}
             </button>
 
-            <span className={styles.productCount}>{sortedProducts.length} products</span>
+            <span className={styles.productCount}>Showing {sortedProducts.length} items in {currentCategory.name}</span>
 
             <div className={styles.toolbarRight}>
-              <div className={styles.sortWrap}>
-                <label htmlFor="sort" className="sr-only">Sort by</label>
-                <select
-                  id="sort"
-                  className={styles.sortSelect}
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value)}
-                >
-                  <option value="popularity">Popularity</option>
-                  <option value="newest">Newest</option>
-                  <option value="price-low">Price: Low to High</option>
-                  <option value="price-high">Price: High to Low</option>
-                  <option value="rating">Avg. Rating</option>
-                </select>
-              </div>
+              <label htmlFor="sort" className={styles.sortLabel}>Sort by:</label>
+              <select
+                id="sort"
+                className={styles.sortSelect}
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+              >
+                <option value="popularity">Most Popular</option>
+                <option value="newest">Newest Arrivals</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+                <option value="rating">Highest Rated</option>
+              </select>
             </div>
           </div>
+
+          {/* Active Filter Tags */}
+          {activeFilterCount > 0 && (
+            <div className={styles.activeTagsRow}>
+              {selectedBrands.map((brand) => (
+                <span key={brand} className={styles.activeTag}>
+                  Brand: {brand}
+                  <button onClick={() => toggleBrand(brand)} aria-label={`Remove ${brand} filter`}>
+                    <X size={12} />
+                  </button>
+                </span>
+              ))}
+              {(priceRange[0] > 0 || priceRange[1] < 5000) && (
+                <span className={styles.activeTag}>
+                  Price: ₹{priceRange[0]} - ₹{priceRange[1]}
+                  <button onClick={() => setPriceRange([0, 5000])} aria-label="Remove price filter">
+                    <X size={12} />
+                  </button>
+                </span>
+              )}
+              <button className={styles.clearAllBtn} onClick={clearFilters}>
+                Clear All
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
@@ -145,7 +180,7 @@ export default function CategoryPage({ params }) {
           {/* Filter Sidebar */}
           <aside className={`${styles.filterSidebar} ${showFilters ? styles.filterOpen : ''}`}>
             <div className={styles.filterHeader}>
-              <h3 className={styles.filterTitle}>Filters</h3>
+              <h3 className={styles.filterTitle}>Filter Category</h3>
               {activeFilterCount > 0 && (
                 <button className={styles.clearFilters} onClick={clearFilters}>
                   Clear all
@@ -154,6 +189,7 @@ export default function CategoryPage({ params }) {
               <button
                 className={styles.filterClose}
                 onClick={() => setShowFilters(false)}
+                aria-label="Close filter drawer"
               >
                 <X size={20} />
               </button>
@@ -161,21 +197,24 @@ export default function CategoryPage({ params }) {
 
             {/* Categories */}
             <div className={styles.filterGroup}>
-              <h4 className={styles.filterGroupTitle}>Categories</h4>
+              <h4 className={styles.filterGroupTitle}>Explore Categories</h4>
               <ul className={styles.filterList}>
                 <li>
                   <Link href="/shop" className={styles.filterLink}>
-                    All Products
+                    <span>All Products</span>
                   </Link>
                 </li>
-                {categories.slice(0, 8).map((cat) => (
+                {categories.map((cat) => (
                   <li key={cat.id}>
                     <Link 
                       href={`/shop/${cat.slug}`} 
                       className={styles.filterLink}
-                      style={{ color: cat.slug === categorySlug ? 'var(--fg-primary)' : '', fontWeight: cat.slug === categorySlug ? 'var(--weight-semibold)' : '' }}
+                      style={{ 
+                        color: cat.slug === categorySlug ? 'var(--fg-primary)' : '', 
+                        fontWeight: cat.slug === categorySlug ? 'var(--weight-bold)' : '' 
+                      }}
                     >
-                      {cat.name}
+                      <span>{cat.name}</span>
                       <span className={styles.filterLinkCount}>{cat.count}</span>
                     </Link>
                   </li>
@@ -187,7 +226,7 @@ export default function CategoryPage({ params }) {
             <div className={styles.filterGroup}>
               <h4 className={styles.filterGroupTitle}>Brands</h4>
               <ul className={styles.filterList}>
-                {brands.slice(0, 10).map((brand) => (
+                {brands.map((brand) => (
                   <li key={brand.id}>
                     <label className={styles.filterCheckbox}>
                       <input
@@ -203,14 +242,14 @@ export default function CategoryPage({ params }) {
               </ul>
             </div>
 
-            {/* Price */}
+            {/* Price Range */}
             <div className={styles.filterGroup}>
-              <h4 className={styles.filterGroupTitle}>Price</h4>
+              <h4 className={styles.filterGroupTitle}>Max Price (₹)</h4>
               <div className={styles.priceInputs}>
                 <input
                   type="number"
                   className={styles.priceInput}
-                  placeholder="Min"
+                  placeholder="Min ₹"
                   value={priceRange[0] || ''}
                   onChange={(e) => setPriceRange([Number(e.target.value) || 0, priceRange[1]])}
                 />
@@ -218,25 +257,11 @@ export default function CategoryPage({ params }) {
                 <input
                   type="number"
                   className={styles.priceInput}
-                  placeholder="Max"
+                  placeholder="Max ₹"
                   value={priceRange[1] || ''}
                   onChange={(e) => setPriceRange([priceRange[0], Number(e.target.value) || 5000])}
                 />
               </div>
-            </div>
-
-            {/* Availability */}
-            <div className={styles.filterGroup}>
-              <h4 className={styles.filterGroupTitle}>Availability</h4>
-              <ul className={styles.filterList}>
-                <li>
-                  <label className={styles.filterCheckbox}>
-                    <input type="checkbox" defaultChecked />
-                    <span className={styles.checkmark} />
-                    <span>In Stock</span>
-                  </label>
-                </li>
-              </ul>
             </div>
           </aside>
 
@@ -248,12 +273,12 @@ export default function CategoryPage({ params }) {
             />
           )}
 
-          {/* Product Grid */}
+          {/* Product Grid Area */}
           <div className={styles.productArea}>
             {sortedProducts.length === 0 ? (
               <div className={styles.emptyState}>
-                <h3>No products found</h3>
-                <p>Try adjusting your filters or search for something else.</p>
+                <h3>No products found in this selection</h3>
+                <p>Try resetting your brand filters or price bounds.</p>
                 <button className="btn btn--secondary" onClick={clearFilters}>
                   Clear Filters
                 </button>

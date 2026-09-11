@@ -1,53 +1,56 @@
-/* Wishlist Styles */
+/* Wishlist Styles — ForPencil V2 Premium Editorial */
 
 .wishlistPage {
-  padding: var(--space-10) 0 var(--space-16);
-  min-height: 60vh;
+  padding: var(--space-12) 0 var(--space-20);
+  min-height: 70vh;
+  background: var(--bg-primary);
 }
 
 .header {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-10);
   padding-bottom: var(--space-4);
-  border-bottom: 1px solid var(--border-muted);
+  border-bottom: 1px solid var(--border-primary);
 }
 
 .title {
   font-family: var(--font-display);
-  font-size: clamp(var(--text-3xl), 4vw, var(--text-4xl));
-  margin-bottom: var(--space-1);
+  font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
+  color: var(--fg-primary);
+  margin-bottom: 2px;
 }
 
 .count {
   font-size: var(--text-sm);
-  color: var(--fg-secondary);
+  color: var(--fg-muted);
   margin: 0;
 }
 
 .clearBtn {
-  font-size: var(--text-xs);
-  color: var(--fg-muted);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
   text-transform: uppercase;
   letter-spacing: var(--tracking-wider);
+  color: var(--fg-muted);
   text-decoration: underline;
   transition: color var(--duration-fast);
 }
 
 .clearBtn:hover {
-  color: var(--fg-primary);
+  color: var(--error);
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-4);
+  gap: var(--space-5);
 }
 
 @media (min-width: 640px) {
   .grid {
-    gap: var(--space-6) var(--space-5);
+    gap: var(--space-6);
   }
 }
 
@@ -68,6 +71,8 @@
   min-height: 60vh;
   display: flex;
   align-items: center;
+  justify-content: center;
+  background: var(--bg-primary);
 }
 
 .emptyContent {
@@ -76,6 +81,7 @@
   flex-direction: column;
   align-items: center;
   gap: var(--space-4);
+  max-width: 420px;
 }
 
 .emptyIcon {
@@ -84,10 +90,11 @@
 
 .emptyTitle {
   font-family: var(--font-display);
-  font-size: var(--text-3xl);
+  font-size: var(--text-4xl);
+  color: var(--fg-primary);
 }
 
 .emptyText {
   color: var(--fg-muted);
-  margin: 0;
+  margin-bottom: var(--space-4);
 }
